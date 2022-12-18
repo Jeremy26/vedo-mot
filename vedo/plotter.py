@@ -3102,6 +3102,9 @@ class Plotter:
         # 2d ####################################################################
         if settings.default_backend == "2d":
             return backends.get_notebook_backend()
+        
+        if settings.default_backend == "2d_image":
+            return backends.get_notebook_backend()
         #########################################################################
 
         if self.interactor:  # can be offscreen..
