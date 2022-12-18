@@ -195,6 +195,9 @@ class Settings:
 
         # Palette number when using an integer to choose a color
         self.palette = 0
+        
+        #provide the absolute path for the image 
+        self.default_image_path_for_2d_backend=''
 
         self.remember_last_figure_format = False
 
