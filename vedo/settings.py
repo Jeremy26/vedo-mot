@@ -122,6 +122,7 @@ class Settings:
         "default_font",
         "default_backend",
         "palette",
+        "default_image_path_for_2d_backend",
         "remember_last_figure_format",
         "screeshot_scale",
         "screenshot_transparent_background",
