@@ -16,6 +16,8 @@ from vedo import shapes
 from vedo.pointcloud import Points
 from vedo.mesh import Mesh
 from vedo.volume import Volume
+from datetime import datetime
+import os
 
 __doc__ = """Submodule to delegate jupyter notebook rendering"""
 
@@ -36,6 +38,10 @@ def get_notebook_backend(actors2show=()):
     #########################################
     if settings.default_backend == "2d":
         return start_2d()
+    
+    #########################################
+    if settings.default_backend == "2d_image":
+        return start_2d_image()
 
     #########################################
     if settings.default_backend.startswith("itk"):
@@ -63,6 +69,33 @@ def get_notebook_backend(actors2show=()):
 
     vedo.logger.error(f"Unknown jupyter backend: {settings.default_backend}")
     return None
+
+
+#####################################################################################
+def start_2d_image():
+
+    try:
+        import PIL.Image
+        import IPython
+    except ImportError("PIL or IPython not available"):
+        return None
+
+    plt = vedo.plotter_instance
+
+    if hasattr(plt, "window") and plt.window:
+        if plt.renderer == plt.renderers[-1]:
+            nn = vedo.io.screenshot(asarray=True, scale=settings.screeshot_scale)
+            pil_img = PIL.Image.fromarray(nn)
+            filename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")            
+            # Check whether the specified path exists or not
+            isExist = os.path.exists(settings.default_image_path_for_2d_backend)
+            if not isExist:
+                os.makedirs(settings.default_image_path_for_2d_backend)
+                print("The new directory "  + settings.default_image_path_for_2d_backend + " is created!")
+                
+            file_name_path = settings.default_image_path_for_2d_backend + '/' +filename + '.png'
+            pil_img.save(file_name_path)              
+            plt.close()
 
 
 #####################################################################################
