@@ -86,7 +86,7 @@ def start_2d_image():
         if plt.renderer == plt.renderers[-1]:
             nn = vedo.io.screenshot(asarray=True, scale=settings.screeshot_scale)
             pil_img = PIL.Image.fromarray(nn)
-            filename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")            
+            filename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%f_%p") 
             # Check whether the specified path exists or not
             isExist = os.path.exists(settings.default_image_path_for_2d_backend)
             if not isExist:
